@@ -21,7 +21,8 @@ server.name = 'API';
 server.use(bodyParser.json());
 
 server.use(cors({
-  origin: 'http://localhost:5173',
+  //origin: 'http://localhost:5173',
+  origin: 'new-events-final-bh3s.vercel.app',
   credentials: true
 }));
 server.use(bodyParser.urlencoded({ extended: true }));
