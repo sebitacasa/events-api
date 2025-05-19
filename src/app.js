@@ -22,7 +22,7 @@ server.use(bodyParser.json());
 
 server.use(cors({
   //origin: 'http://localhost:5173',
-  origin: 'new-events-final-bh3s.vercel.app',
+  origin: 'https://new-events-final-bh3z.vercel.app',
   credentials: true
 }));
 server.use(bodyParser.urlencoded({ extended: true }));
