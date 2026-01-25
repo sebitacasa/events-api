@@ -384,7 +384,7 @@ const jwtCheck = auth({
     `;
 
     // 6. Enviar mail
-    await sendEmail(email, mailSucces);
+    //await sendEmail(email, mailSucces);
     status = "success";
     return res.json({ status });
   } catch (err) {
@@ -393,7 +393,7 @@ const jwtCheck = auth({
       await updateOrderStatus(order.id, "Rejected");
       const user = await User.findByPk(order.UserId);
       const email = user?.dataValues?.email;
-      await sendEmail(email, mailFail);
+      //await sendEmail(email, mailFail);
     }
     res.status(500).json({ status, error: err.message });
   }
