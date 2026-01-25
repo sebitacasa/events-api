@@ -4,20 +4,29 @@ const { MAILUSER, MAILPASS } = process.env;
 
 async function sendEmail(userEmail, content) {
   
+  // 1. Configuración (Outlook/Hotmail)
   let transporter = nodemailer.createTransport({
-    host: "smtp-mail.outlook.com", // Servidor de Microsoft
-    port: 587,                     // Puerto estándar
-    secure: false,                 // false para puerto 587
+    host: "smtp-mail.outlook.com", 
+    port: 587,
+    secure: false, 
     auth: {
       user: MAILUSER,
       pass: MAILPASS,
     },
     tls: {
-      ciphers: 'SSLv3',            // Ayuda a la compatibilidad
+      ciphers: 'SSLv3',
       rejectUnauthorized: false
     }
   });
 
+  // 2. 🔥 AQUÍ ES DONDE DEBEN IR LOS LOGS (Dentro de la función) 🔥
+  console.log("📡 --- DEBUG EMAIL ---");
+  console.log("HOST CONFIGURADO:", transporter.options.host); 
+  console.log("PUERTO:", transporter.options.port);
+  console.log("USUARIO:", transporter.options.auth.user);
+  console.log("---------------------");
+
+  // 3. Enviar el correo
   let info = await transporter.sendMail({
     from: `"UnderEvent App" <${MAILUSER}>`, 
     to: userEmail, 
@@ -26,7 +35,7 @@ async function sendEmail(userEmail, content) {
     html: emailModel(content), 
   });
 
-  console.log("✅ Correo enviado vía Outlook: %s", info.messageId);
+  console.log("✅ Correo enviado: %s", info.messageId);
 }
 
 module.exports = { sendEmail };

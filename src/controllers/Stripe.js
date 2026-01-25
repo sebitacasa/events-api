@@ -384,6 +384,7 @@ const jwtCheck = auth({
     `;
 
     // 6. Enviar mail
+    
    sendEmail(email, mailSucces).catch(err => {
         console.error("⚠️ El correo falló en segundo plano:", err.message);
     });
