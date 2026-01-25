@@ -1,24 +1,19 @@
-const { MAILUSER, MAILPASS } = process.env;
 const nodemailer = require("nodemailer");
 const { emailModel } = require("./emailModel");
 
-
+const { MAILUSER, MAILPASS } = process.env;
 
 async function sendEmail(userEmail, content) {
 
   let transporter = nodemailer.createTransport({
-    service: "smtp.gmail.com",
-    port: 587,              // Usamos el puerto estándar de TLS
-    secure: false,
+    service: "gmail",
     auth: {
-     user: MAILUSER, // <--- CAMBIO AQUÍ (antes tenía el email escrito)
-      pass: MAILPASS, // <--- CAMBIO AQUÍ (antes tenía la contraseña escrita)
+      user: "blackwilson1495@gmail.com", // generated ethereal user
+      pass: "jagkviygqxxhlzth", // generated ethereal password
     },
     tls: {
       rejectUnauthorized: false,
     },
-    
-  family: 4,
   });
 
   let info = await transporter.sendMail({
