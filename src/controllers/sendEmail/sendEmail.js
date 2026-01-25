@@ -4,27 +4,26 @@ const { MAILUSER, MAILPASS } = process.env;
 
 async function sendEmail(userEmail, content) {
   
-  // Configuración Microsoft Moderna (Sin cifrados viejos)
+  // Configuración BREVO (Puerto 2525 para evitar bloqueos de Railway)
   let transporter = nodemailer.createTransport({
-    host: "smtp.office365.com", // Servidor oficial moderno
-    port: 587,
-    secure: false, // STARTTLS
+    host: "smtp-relay.brevo.com", // Host oficial de Brevo
+    port: 2525,                   // <--- ¡IMPORTANTE! Este puerto evita el Timeout
+    secure: false,                
     auth: {
-      user: MAILUSER,
-      pass: MAILPASS,
+      user: MAILUSER,             // Tu email de login en Brevo (sebitacasa14@gmail.com)
+      pass: MAILPASS,             // La clave SMTP que generaste (la larga)
     },
     tls: {
       rejectUnauthorized: false
-      // HEMOS QUITADO "ciphers: SSLv3" porque eso bloqueaba la conexión
     },
-    family: 4, // Mantenemos IPv4 porque eso sí ayuda en Railway
+    family: 4, // Forzar IPv4 para mayor compatibilidad
   });
 
-  console.log("📡 --- INTENTO DE ENVÍO (OFFICE365) ---");
+  console.log("📡 --- INTENTO DE ENVÍO (BREVO 2525) ---");
   
   // Enviar el correo
   let info = await transporter.sendMail({
-    from: `"UnderEvent App" <${MAILUSER}>`, 
+    from: `"UnderEvent App" <${MAILUSER}>`, // Brevo requiere que el remitente coincida con tu usuario
     to: userEmail, 
     subject: `Notificación de tu compra UnderEventApp`, 
     text: "Compra UnderEventApp", 
