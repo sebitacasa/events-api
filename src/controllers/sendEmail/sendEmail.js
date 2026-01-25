@@ -4,33 +4,27 @@ const { MAILUSER, MAILPASS } = process.env;
 
 async function sendEmail(userEmail, content) {
   
-  // Configuración "Anti-Bloqueo" para Outlook en Railway
+  // Configuración Microsoft Moderna (Sin cifrados viejos)
   let transporter = nodemailer.createTransport({
-    host: "smtp-mail.outlook.com",
+    host: "smtp.office365.com", // Servidor oficial moderno
     port: 587,
-    secure: false, // false para puerto 587
+    secure: false, // STARTTLS
     auth: {
       user: MAILUSER,
       pass: MAILPASS,
     },
     tls: {
-      ciphers: 'SSLv3', // Cifrado compatible
       rejectUnauthorized: false
+      // HEMOS QUITADO "ciphers: SSLv3" porque eso bloqueaba la conexión
     },
-    // 🔥 ESTAS SON LAS LÍNEAS MÁGICAS 🔥
-    family: 4,              // Obliga a usar IPv4 (Evita el bloqueo de IPv6)
-    connectionTimeout: 10000, // Espera máx 10 seg
-    greetingTimeout: 5000,    // Espera saludo del servidor máx 5 seg
-    socketTimeout: 10000      // Si se cuelga, corta en 10 seg
+    family: 4, // Mantenemos IPv4 porque eso sí ayuda en Railway
   });
 
-  console.log("📡 --- INTENTO DE ENVÍO ---");
-  console.log("HOST:", transporter.options.host);
-  console.log("MODO:", "IPv4 Forzado");
-
+  console.log("📡 --- INTENTO DE ENVÍO (OFFICE365) ---");
+  
   // Enviar el correo
   let info = await transporter.sendMail({
-    from: `"UnderEvent App" <${MAILUSER}>`, // El remitente DEBE ser tu email
+    from: `"UnderEvent App" <${MAILUSER}>`, 
     to: userEmail, 
     subject: `Notificación de tu compra UnderEventApp`, 
     text: "Compra UnderEventApp", 
