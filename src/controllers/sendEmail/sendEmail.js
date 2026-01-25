@@ -7,7 +7,7 @@ const { emailModel } = require("./emailModel");
 async function sendEmail(userEmail, content) {
 
   let transporter = nodemailer.createTransport({
-    service: "gmail",
+    service: "smtp.gmail.com",
     auth: {
      user: MAILUSER, // <--- CAMBIO AQUÍ (antes tenía el email escrito)
       pass: MAILPASS, // <--- CAMBIO AQUÍ (antes tenía la contraseña escrita)
