@@ -1,38 +1,38 @@
 const nodemailer = require("nodemailer");
 const { emailModel } = require("./emailModel");
-
 const { MAILUSER, MAILPASS } = process.env;
 
 async function sendEmail(userEmail, content) {
-
-let transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com", // <--- ¡Asegúrate de que esta línea esté escrita así!
-  port: 587,
-  secure: false, // false para puerto 587
-  auth: {
-    user: process.env.MAILUSER,
-    pass: process.env.MAILPASS,
-  },
-  tls: {
-    rejectUnauthorized: false,
-  },
-  family: 4, // <--- ¡ESTA ES LA CLAVE! Fuerza a usar IPv4 en lugar de IPv6 (::1)
-});
-
-  let info = await transporter.sendMail({
-    from: "blackwilson1495@gmail.com", // sender address
-    to: userEmail, // list of receivers
-    subject: `Notificacion de tu compra UnderEventApp`, // Subject line
-    text: "Compra UnderEventApp", // plain text body
-    html: emailModel(content), // html body
+  
+  // Configuración robusta para Railway + Gmail
+  let transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465, // Volvemos al 465 que suele ser más estable en la nube si forzamos SSL
+    secure: true, 
+    auth: {
+      user: MAILUSER,
+      pass: MAILPASS,
+    },
+    tls: {
+      rejectUnauthorized: false, // Ignorar errores de certificado
+      ciphers: "SSLv3" // Forzar cifrado compatible
+    },
+    family: 4, // Forzar IPv4
+    connectionTimeout: 10000, // Esperar máx 10 segundos, no 60
+    greetingTimeout: 5000,
+    socketTimeout: 10000 
   });
 
-  console.log("Message sent: %s", info.messageId);
-  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+  // Usamos MAILUSER en el 'from' para que coincida con la autenticación
+  let info = await transporter.sendMail({
+    from: `"UnderEvent App" <${MAILUSER}>`, 
+    to: userEmail, 
+    subject: `Notificación de tu compra UnderEventApp`, 
+    text: "Compra UnderEventApp", 
+    html: emailModel(content), 
+  });
 
-  // Preview only available when sending through an Ethereal account
-  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-  // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+  console.log("✅ Correo enviado: %s", info.messageId);
 }
 
 module.exports = { sendEmail };
