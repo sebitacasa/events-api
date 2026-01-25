@@ -1,36 +1,49 @@
-const nodemailer = require("nodemailer");
+const axios = require("axios");
 const { emailModel } = require("./emailModel");
-const { MAILUSER, MAILPASS } = process.env;
+const { MAILUSER, MAILPASS } = process.env; // MAILPASS ahora es tu API KEY (xkeysib...)
 
 async function sendEmail(userEmail, content) {
   
-  // Configuración BREVO (Puerto 2525 para evitar bloqueos de Railway)
-  let transporter = nodemailer.createTransport({
-    host: "smtp-relay.brevo.com", // Host oficial de Brevo
-    port: 2525,                   // <--- ¡IMPORTANTE! Este puerto evita el Timeout
-    secure: false,                
-    auth: {
-      user: MAILUSER,             // Tu email de login en Brevo (sebitacasa14@gmail.com)
-      pass: MAILPASS,             // La clave SMTP que generaste (la larga)
-    },
-    tls: {
-      rejectUnauthorized: false
-    },
-    family: 4, // Forzar IPv4 para mayor compatibilidad
-  });
+  console.log("📡 --- INTENTO DE ENVÍO VÍA API (HTTP) ---");
 
-  console.log("📡 --- INTENTO DE ENVÍO (BREVO 2525) ---");
+  const url = "https://api.brevo.com/v3/smtp/email";
   
-  // Enviar el correo
-  let info = await transporter.sendMail({
-    from: `"UnderEvent App" <${MAILUSER}>`, // Brevo requiere que el remitente coincida con tu usuario
-    to: userEmail, 
-    subject: `Notificación de tu compra UnderEventApp`, 
-    text: "Compra UnderEventApp", 
-    html: emailModel(content), 
-  });
+  const data = {
+    sender: {
+      name: "UnderEvent App",
+      email: MAILUSER // Debe ser tu email verificado en Brevo
+    },
+    to: [
+      {
+        email: userEmail,
+        name: "Cliente"
+      }
+    ],
+    subject: "Notificación de tu compra UnderEventApp",
+    htmlContent: emailModel(content)
+  };
 
-  console.log("✅ Correo enviado con éxito ID: %s", info.messageId);
+  try {
+    const response = await axios.post(url, data, {
+      headers: {
+        'accept': 'application/json',
+        'api-key': MAILPASS, // Aquí va la clave xkeysib...
+        'content-type': 'application/json'
+      }
+    });
+
+    console.log("✅ Correo enviado con éxito (API). ID:", response.data.messageId);
+    
+  } catch (error) {
+    console.error("❌ Error enviando correo vía API:");
+    // Mostramos el error detallado que devuelve Brevo para saber qué pasa
+    if (error.response) {
+        console.error("Data:", error.response.data);
+        console.error("Status:", error.response.status);
+    } else {
+        console.error(error.message);
+    }
+  }
 }
 
 module.exports = { sendEmail };
