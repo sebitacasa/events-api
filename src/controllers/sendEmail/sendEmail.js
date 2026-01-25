@@ -8,6 +8,8 @@ async function sendEmail(userEmail, content) {
 
   let transporter = nodemailer.createTransport({
     service: "smtp.gmail.com",
+    port: 587,              // Usamos el puerto estándar de TLS
+    secure: false,
     auth: {
      user: MAILUSER, // <--- CAMBIO AQUÍ (antes tenía el email escrito)
       pass: MAILPASS, // <--- CAMBIO AQUÍ (antes tenía la contraseña escrita)
