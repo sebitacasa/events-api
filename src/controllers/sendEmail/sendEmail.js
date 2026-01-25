@@ -17,6 +17,8 @@ async function sendEmail(userEmail, content) {
     tls: {
       rejectUnauthorized: false,
     },
+    
+  family: 4,
   });
 
   let info = await transporter.sendMail({

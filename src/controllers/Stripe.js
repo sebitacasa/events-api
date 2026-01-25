@@ -384,7 +384,12 @@ const jwtCheck = auth({
     `;
 
     // 6. Enviar mail
-    await sendEmail(email, mailSucces);
+    try {
+        await sendEmail(email, mailSucces);
+    } catch (emailErr) {
+        console.log("⚠️ El pago fue exitoso, pero falló el envío del correo:", emailErr.message);
+        // No hacemos nada más, dejamos que el código siga hacia el "return success"
+    }
     status = "success";
     return res.json({ status });
   } catch (err) {
