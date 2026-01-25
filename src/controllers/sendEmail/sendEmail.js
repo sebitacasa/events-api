@@ -1,15 +1,16 @@
+const { MAILUSER, MAILPASS } = process.env;
 const nodemailer = require("nodemailer");
 const { emailModel } = require("./emailModel");
 
-const { MAILUSER, MAILPASS } = process.env;
+
 
 async function sendEmail(userEmail, content) {
 
   let transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "blackwilson1495@gmail.com", // generated ethereal user
-      pass: "uitvwamhcjhomweu", // generated ethereal password
+     user: MAILUSER, // <--- CAMBIO AQUÍ (antes tenía el email escrito)
+      pass: MAILPASS, // <--- CAMBIO AQUÍ (antes tenía la contraseña escrita)
     },
     tls: {
       rejectUnauthorized: false,
