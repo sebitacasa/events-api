@@ -26,8 +26,8 @@ const mailFail = {
 };
 
 const jwtCheck = auth({
-  audience: ["https://underevents/api", "https://dev-jdkm0r3xevm3bopt.us.auth0.com/userinfo"],
-  issuerBaseURL: "https://dev-jdkm0r3xevm3bopt.us.auth0.com",
+  audience: process.env.AUTH0_AUDIENCE,
+  issuerBaseURL: `https://${process.env.AUTH0_DOMAIN}`,
   tokenSigningAlg: "RS256",
 });
 
