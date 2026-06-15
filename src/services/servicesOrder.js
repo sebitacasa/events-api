@@ -16,11 +16,11 @@ const createOrder = async (order) => {
         },
       },
     });
-    console.log("usuario encontroda sssssss", user.dataValues)
     if (!user) {
       console.error("❌ Usuario no registrado:", order.email);
       return null; // No crear la orden
     }
+    console.log("usuario encontrado", user.dataValues)
 
     const newOrder = await user.createOrder({
       userId: user.id,
