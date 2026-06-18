@@ -5,7 +5,7 @@ function emailModel(content){
     const buttonLink=content.buttonLink
     const buttonText=content.buttonText
     const noteMessage=content.noteMessage
-    const logo="https://www.experienciasdelavida.com/wp-content/uploads/2019/05/%C2%A1Gracias.png"
+    const logo=null
     
     
     const email = `
@@ -139,7 +139,10 @@ function emailModel(content){
       <tr>
         <td style="padding-right: 0px;padding-left: 0px;" align="center">
           
-          <img align="center" border="0" src=${logo} alt="Image" title="Image" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 29%;max-width: 168.2px;" width="168.2"/>
+          <div style="text-align:center; padding:10px 0;">
+            <span style="font-family:'Lato',Arial,sans-serif; font-size:26px; font-weight:700; color:#f0ad4e; letter-spacing:3px;">UNDER</span>
+            <span style="font-family:'Lato',Arial,sans-serif; font-size:26px; font-weight:300; color:#1a1a2e; letter-spacing:2px;"> EVENT</span>
+          </div>
           
         </td>
       </tr>
@@ -261,9 +264,9 @@ function emailModel(content){
           <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Lato',sans-serif;" align="left">
             
       <div style="line-height: 140%; text-align: left; word-wrap: break-word;">
-        <p style="font-size: 14px; line-height: 140%;"><span style="font-size: 16px; line-height: 22.4px; color: #ecf0f1;">Contact Us</span></p>
-    <p style="font-size: 14px; line-height: 140%;"><span style="font-size: 14px; line-height: 19.6px; color: #ecf0f1;">UNDER EVENT APP</span></p>
-    <p style="font-size: 14px; line-height: 140%;"><span style="font-size: 14px; line-height: 19.6px; color: #ecf0f1;">+543534284707 | under.event@yahoo.com</span></p>
+        <p style="font-size: 14px; line-height: 140%;"><span style="font-size: 16px; line-height: 22.4px; color: #ecf0f1; font-weight:700;">Contact Us</span></p>
+    <p style="font-size: 14px; line-height: 140%;"><span style="font-size: 14px; line-height: 19.6px; color: #ecf0f1;">Under Event App</span></p>
+    <p style="font-size: 14px; line-height: 140%;"><span style="font-size: 14px; line-height: 19.6px; color: #ecf0f1;">+543534284707 &nbsp;|&nbsp; under.event@yahoo.com</span></p>
       </div>
           </td>
         </tr>
@@ -298,7 +301,7 @@ function emailModel(content){
           <td style="overflow-wrap:break-word;word-break:break-word;padding:5px 10px 10px;font-family:'Lato',sans-serif;" align="left">
             
       <div style="line-height: 140%; text-align: left; word-wrap: break-word;">
-        <p style="line-height: 140%; font-size: 14px;"><span style="font-size: 14px; line-height: 19.6px;"><span style="color: #ecf0f1; font-size: 14px; line-height: 19.6px;"><span style="line-height: 19.6px; font-size: 14px;">UNDER EVENT APP&copy;&nbsp; All Rights Reserved</span></span></span></p>
+        <p style="line-height: 140%; font-size: 14px;"><span style="font-size: 14px; line-height: 19.6px;"><span style="color: #ecf0f1; font-size: 14px; line-height: 19.6px;"><span style="line-height: 19.6px; font-size: 14px;">Under Event App &copy; All Rights Reserved</span></span></span></p>
       </div>
           </td>
         </tr>

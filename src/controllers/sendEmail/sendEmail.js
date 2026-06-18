@@ -19,7 +19,7 @@ async function sendEmail(userEmail, content) {
         name: "Cliente"
       }
     ],
-    subject: "Notificación de tu compra UnderEventApp",
+    subject: "Your Tickets — Under Event App",
     htmlContent: emailModel(content)
   };
 

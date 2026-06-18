@@ -11,18 +11,18 @@ const { auth } = require("express-oauth2-jwt-bearer");
 const { Op } = require("sequelize");
 
 const mailSucces = {
-  title: "Su compra ha sido exitosa",
+  title: "Your Purchase Is Confirmed!",
   buttonLink: "https://under-event-client.vercel.app/",
-  buttonText: "Mira más Eventos",
-  noteMessage: "No compartas estos Tickets, son de uso exclusivo para ti",
+  buttonText: "Explore More Events",
+  noteMessage: "Keep your tickets safe — they are for your personal use only and are non-transferable.",
 };
 
 const mailFail = {
-  title: "Su compra ha sido rechazada",
-  message: "Intenta de nuevo en nuestra web wwww.underevent.com",
+  title: "Payment Declined",
+  message: "Something went wrong with your payment. Please try again.",
   buttonLink: "https://under-event-client.vercel.app/",
-  buttonText: "Mira más Eventos",
-  noteMessage: "Puedes reintentar la compra con el carrito de compras",
+  buttonText: "Try Again",
+  noteMessage: "You can retry the purchase anytime from your shopping cart.",
 };
 
 const jwtCheck = auth({
@@ -95,292 +95,73 @@ const jwtCheck = auth({
   
 
     // 4. Generar HTML de tickets
-    const htmlTickets = tickets.map((e) => {
-      return    `
-      <!DOCTYPE html>
-      <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
-      
-      <head>
-        <title></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!--[if mso]><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch><o:AllowPNG/></o:OfficeDocumentSettings></xml><![endif]-->
-        <style>
-          * {
-            box-sizing: border-box;
-          }
-      
-          body {
-            margin: 0;
-            padding: 0;
-          }
-      
-          a[x-apple-data-detectors] {
-            color: inherit !important;
-            text-decoration: inherit !important;
-          }
-      
-          #MessageViewBody a {
-            color: inherit;
-            text-decoration: none;
-          }
-      
-          p {
-            line-height: inherit
-          }
-      
-          .desktop_hide,
-          .desktop_hide table {
-            mso-hide: all;
-            display: none;
-            max-height: 0px;
-            overflow: hidden;
-          }
-      
-          @media (max-width:720px) {
-            .desktop_hide table.icons-inner {
-              display: inline-block !important;
-            }
-      
-            .icons-inner {
-              text-align: center;
-            }
-      
-            .icons-inner td {
-              margin: 0 auto;
-            }
-      
-            .row-content {
-              width: 100% !important;
-            }
-      
-            .column .border,
-            .mobile_hide {
-              display: none;
-            }
-      
-            table {
-              table-layout: fixed !important;
-            }
-      
-            .stack .column {
-              width: 100%;
-              display: block;
-            }
-      
-            .mobile_hide {
-              min-height: 0;
-              max-height: 0;
-              max-width: 0;
-              overflow: hidden;
-              font-size: 0px;
-            }
-      
-            .desktop_hide,
-            .desktop_hide table {
-              display: table !important;
-              max-height: none !important;
-            }
-          }
-        </style>
-      </head>
-      
-      <body style="background-color: #FFFFFF; margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
-        <table class="nl-container" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #FFFFFF;">
-          <tbody>
-            <tr>
-              <td>
-                <table class="row row-1" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                  <tbody>
-                    <tr>
-                      <td>
-                        <table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 700px;" width="700">
-                          <tbody>
-                            <tr>
-                              <td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
-                                <table class="empty_block" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                                  <tr>
-                                    <td>
-                                      <div></div>
-                                    </td>
-                                  </tr>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <table class="row row-2" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                  <tbody>
-                    <tr>
-                      <td>
-                        <table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 700px;" width="700">
-                          <tbody>
-                            <tr>
-                              <td class="column column-1" width="25%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; border-bottom: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; border-top: 2px solid #000000;">
-                                <table class="image_block" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                                  <tr>
-                                    <td style="width:100%;padding-right:0px;padding-left:0px;padding-top:5px;">
-                                      <div align="center" style="line-height:10px"><img src=${e.Event.dataValues.imagen} style="display: block; height: auto; border: 0; width: 171px; max-width: 100%;" width="171" alt="I'm an image" title="I'm an image"></div>
-                                    </td>
-                                  </tr>
-                                </table>
-                                <table class="heading_block" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                                  <tr>
-                                    <td style="padding-top:15px;text-align:center;width:100%;padding-bottom:5px;">
-                                      <h1 style="margin: 0; color: #393d47; direction: ltr; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 18px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;"><span class="tinyMce-placeholder">UNDER EVENT </span></h1>
-                                    </td>
-                                  </tr>
-                                </table>
-                              </td>
-                              <td class="column column-2" width="50%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; border-bottom: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; border-top: 2px solid #000000;">
-                                <table class="heading_block" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                                  <tr>
-                                    <td style="padding-left:10px;text-align:center;width:100%;padding-top:5px;">
-                                      <h2 style="margin: 0; color: #393d47; direction: ltr; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 18px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: left; margin-top: 0; margin-bottom: 0;"><span class="tinyMce-placeholder">${e.Event.dataValues.title}</span></h2>
-                                    </td>
-                                  </tr>
-                                </table>
-                                <table class="divider_block" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                                  <tr>
-                                    <td>
-                                      <div align="center">
-                                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                                          <tr>
-                                            <td class="divider_inner" style="font-size: 1px; line-height: 1px; border-top: 1px solid #BBBBBB;"><span>&#8202;</span></td>
-                                          </tr>
-                                        </table>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                </table>
-                                <table class="text_block" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
-                                  <tr>
-                                    <td>
-                                      <div style="font-family: sans-serif">
-                                        <div class="txtTinyMce-wrapper" style="font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #555555; line-height: 1.2; font-family: Arial, Helvetica Neue, Helvetica, sans-serif;">
-                                          <p style="margin: 0; font-size: 12px;">LUGAR:${ e.Event.dataValues.location}</p>
-                                        </div>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                </table>
-                                <table class="text_block" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
-                                  <tr>
-                                    <td>
-                                      <div style="font-family: sans-serif">
-                                        <div class="txtTinyMce-wrapper" style="font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #555555; line-height: 1.2; font-family: Arial, Helvetica Neue, Helvetica, sans-serif;">
-                                          <p style="margin: 0; font-size: 12px;">FECHA:${ e.Event.dataValues.date}&nbsp;</p>
-                                        </div>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                </table>
-                                <table class="text_block" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
-                                  <tr>
-                                    <td>
-                                      <div style="font-family: sans-serif">
-                                        <div class="txtTinyMce-wrapper" style="font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #555555; line-height: 1.2; font-family: Arial, Helvetica Neue, Helvetica, sans-serif;">
-                                          <p style="margin: 0; font-size: 12px;">HORARIO:${e.Event.dataValues.time} &nbsp;</p>
-                                        </div>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                </table>
-                                <table class="text_block" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
-                                  <tr>
-                                    <td style="padding-bottom:15px;padding-left:10px;padding-right:10px;padding-top:10px;">
-                                      <div style="font-family: sans-serif">
-                                        <div class="txtTinyMce-wrapper" style="font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #555555; line-height: 1.2; font-family: Arial, Helvetica Neue, Helvetica, sans-serif;">
-                                          <p style="margin: 0; font-size: 12px;">TICKET: ${e.dataValues.id}&nbsp;</p>
-                                        </div>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                </table>
-                              </td>
-                              <td class="column column-3" width="25%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; border-bottom: 2px solid #000000; border-left: 2px solid #000000; border-right: 2px solid #000000; border-top: 2px solid #000000;">
-                                <table class="image_block" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                                  <tr>
-                                    <td style="width:100%;padding-right:0px;padding-left:0px;padding-top:5px;">
-                                      <div align="center" style="line-height:10px"><img src="https://qrcode.tec-it.com/API/QRCode?data=smsto%3a555-555-5555%3aGenerador+de+C%c3%b3digos+QR+de+TEC-IT" style="display: block; height: auto; border: 0; width: 171px; max-width: 100%;" width="171" alt="I'm an image" title="I'm an image"></div>
-                                    </td>
-                                  </tr>
-                                </table>
-                                <table class="social_block" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                                  <tr>
-                                    <td style="padding-bottom:15px;padding-left:10px;padding-right:10px;padding-top:10px;text-align:center;">
-                                      <table class="social-table" width="144px" border="0" cellpadding="0" cellspacing="0" role="presentation" align="center" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                                        <tr>
-                                          <td style="padding:0 2px 0 2px;"><a href="https://www.facebook.com/" target="_blank"><img src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-color/facebook@2x.png" width="32" height="32" alt="Facebook" title="facebook" style="display: block; height: auto; border: 0;"></a></td>
-                                          <td style="padding:0 2px 0 2px;"><a href="https://www.twitter.com/" target="_blank"><img src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-color/twitter@2x.png" width="32" height="32" alt="Twitter" title="twitter" style="display: block; height: auto; border: 0;"></a></td>
-                                          <td style="padding:0 2px 0 2px;"><a href="https://www.linkedin.com/" target="_blank"><img src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-color/linkedin@2x.png" width="32" height="32" alt="Linkedin" title="linkedin" style="display: block; height: auto; border: 0;"></a></td>
-                                          <td style="padding:0 2px 0 2px;"><a href="https://www.instagram.com/" target="_blank"><img src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-color/instagram@2x.png" width="32" height="32" alt="Instagram" title="instagram" style="display: block; height: auto; border: 0;"></a></td>
-                                        </tr>
-                                      </table>
-                                    </td>
-                                  </tr>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <table class="row row-3" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                  <tbody>
-                    <tr>
-                      <td>
-                        <table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 700px;" width="700">
-                          <tbody>
-                            <tr>
-                              <td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
-                                <table class="icons_block" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                                  <tr>
-                                    <td style="vertical-align: middle; color: #9d9d9d; font-family: inherit; font-size: 15px; padding-bottom: 5px; padding-top: 5px; text-align: center;">
-                                      <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                                        <tr>
-                                          <td style="vertical-align: middle; text-align: center;">
-                                            <!--[if vml]><table align="left" cellpadding="0" cellspacing="0" role="presentation" style="display:inline-block;padding-left:0px;padding-right:0px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;"><![endif]-->
-                                            <!--[if !vml]><!-->
-                                  
-                                          </td>
-                                        </tr>
-                                      </table>
-                                    </td>
-                                  </tr>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-          </tbody>
-        </table><!-- End -->
-      </body>
-      
-      </html>
-`;
-    }).join("");
+    const htmlTickets = tickets.map((e) => `
+      <table width="100%" cellpadding="0" cellspacing="0" border="0"
+        style="max-width:520px; margin:16px auto 24px; border:2px solid #f0ad4e; border-radius:8px; overflow:hidden; font-family:Arial,Helvetica,sans-serif; background:#ffffff;">
+        <tbody>
+          <!-- Ticket header bar -->
+          <tr>
+            <td colspan="3" style="background-color:#1a1a2e; padding:10px 20px; text-align:center;">
+              <span style="font-family:Arial,sans-serif; font-size:12px; font-weight:700; color:#f0ad4e; letter-spacing:4px; text-transform:uppercase;">
+                UNDER EVENT APP
+              </span>
+            </td>
+          </tr>
+          <!-- Ticket body -->
+          <tr>
+            <!-- Left column: amber + event image -->
+            <td width="25%" valign="top" style="background-color:#f0ad4e; padding:14px 10px; text-align:center;">
+              <img src="${e.Event.dataValues.imagen}" width="110"
+                style="width:110px; max-width:100%; height:auto; display:block; margin:0 auto; border-radius:4px; border:2px solid #fff;"
+                alt="Event">
+              <p style="margin:10px 0 0; color:#ffffff; font-size:11px; font-weight:700; text-align:center; line-height:1.4; letter-spacing:1px; text-transform:uppercase;">
+                UNDER<br>EVENT
+              </p>
+            </td>
+            <!-- Center column: event details -->
+            <td width="50%" valign="top" style="padding:16px 18px; border-left:2px dashed #f0ad4e; border-right:2px dashed #f0ad4e;">
+              <h2 style="margin:0 0 14px; color:#1a1a2e; font-size:15px; font-weight:700; line-height:1.3; font-family:Arial,Helvetica,sans-serif;">
+                ${e.Event.dataValues.title}
+              </h2>
+              <p style="margin:0 0 3px; font-size:9px; color:#f0ad4e; font-weight:700; text-transform:uppercase; letter-spacing:1.5px;">Location</p>
+              <p style="margin:0 0 10px; font-size:12px; color:#555555; line-height:1.4;">${e.Event.dataValues.location}</p>
+              <p style="margin:0 0 3px; font-size:9px; color:#f0ad4e; font-weight:700; text-transform:uppercase; letter-spacing:1.5px;">Date</p>
+              <p style="margin:0 0 10px; font-size:12px; color:#555555;">${e.Event.dataValues.date}</p>
+              <p style="margin:0 0 3px; font-size:9px; color:#f0ad4e; font-weight:700; text-transform:uppercase; letter-spacing:1.5px;">Time</p>
+              <p style="margin:0 0 12px; font-size:12px; color:#555555;">${e.Event.dataValues.time}</p>
+              <div style="padding-top:10px; border-top:1px solid #eeeeee;">
+                <p style="margin:0 0 2px; font-size:9px; color:#aaaaaa; text-transform:uppercase; letter-spacing:1px;">Ticket ID</p>
+                <p style="margin:0; font-size:13px; color:#1a1a2e; font-weight:700; font-family:'Courier New',monospace;">#${e.dataValues.id}</p>
+              </div>
+            </td>
+            <!-- Right column: QR code -->
+            <td width="25%" valign="top" style="padding:14px 10px; text-align:center;">
+              <img src="https://qrcode.tec-it.com/API/QRCode?data=${e.dataValues.id}"
+                width="90" height="90"
+                style="width:90px; height:90px; display:block; margin:0 auto; border:2px solid #f0ad4e; border-radius:4px;"
+                alt="QR Code">
+              <p style="margin:8px 0 0; font-size:9px; color:#999999; text-align:center; text-transform:uppercase; letter-spacing:0.5px;">Scan at entrance</p>
+            </td>
+          </tr>
+          <!-- Ticket footer -->
+          <tr>
+            <td colspan="3" style="background-color:#fafafa; padding:8px 20px; border-top:1px solid #eeeeee; text-align:center;">
+              <span style="font-size:10px; color:#aaaaaa; font-style:italic; font-family:Arial,sans-serif;">
+                Non-transferable &middot; For personal use only
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    `).join("");
 
     // 5. Armar cuerpo del mail
     mailSucces.message = `
-      <div style="font-family: sans-serif;">
-        <h1>${mailSucces.title}</h1>
-        <p>${mailSucces.noteMessage}</p>
-        ${htmlTickets}
-        <a href="${mailSucces.buttonLink}" style="padding:10px 20px; background-color:#f0ad4e; color:black; text-decoration:none; font-weight:bold;">${mailSucces.buttonText}</a>
-      </div>
+      <p style="font-size:16px; color:#555555; line-height:1.6; margin:0 0 20px 0; font-family:Arial,sans-serif;">
+        Thank you for your purchase! Your tickets are confirmed and ready to use.
+        Please save this email and present your tickets at the venue entrance.
+      </p>
+      ${htmlTickets}
     `;
 
     // 6. Enviar mail
