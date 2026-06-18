@@ -95,7 +95,9 @@ const jwtCheck = auth({
   
 
     // 4. Generar HTML de tickets
-    const htmlTickets = tickets.map((e) => `
+    const htmlTickets = tickets.map((e) => {
+      const imageUrl = (e.Event.dataValues.imagen || '').replace(/^http:\/\//i, 'https://');
+      return `
       <table width="100%" cellpadding="0" cellspacing="0" border="0"
         style="max-width:520px; margin:16px auto 24px; border:2px solid #f0ad4e; border-radius:8px; overflow:hidden; font-family:Arial,Helvetica,sans-serif; background:#ffffff;">
         <tbody>
@@ -111,8 +113,8 @@ const jwtCheck = auth({
           <tr>
             <!-- Left column: amber + event image -->
             <td width="25%" valign="top" style="background-color:#f0ad4e; padding:14px 10px; text-align:center;">
-              <img src="${e.Event.dataValues.imagen}" width="110"
-                style="width:110px; max-width:100%; height:auto; display:block; margin:0 auto; border-radius:4px; border:2px solid #fff;"
+              <img src="${imageUrl}" width="110"
+                style="width:110px; max-width:100%; height:auto; display:block; margin:0 auto;"
                 alt="Event">
               <p style="margin:10px 0 0; color:#ffffff; font-size:11px; font-weight:700; text-align:center; line-height:1.4; letter-spacing:1px; text-transform:uppercase;">
                 UNDER<br>EVENT
@@ -153,7 +155,8 @@ const jwtCheck = auth({
           </tr>
         </tbody>
       </table>
-    `).join("");
+    `;
+    }).join("");
 
     // 5. Armar cuerpo del mail
     mailSucces.message = `
